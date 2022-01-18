@@ -21,6 +21,12 @@ class MoviesControllerTest < ActionDispatch::IntegrationTest
   test "should show movie" do
     get movie_url(@movie), as: :json
     assert_response :success
+    
+    json_response = JSON.parse(response.body)
+    person = people(:one)
+    assert_equal @movie.id, json_response["id"]
+    assert_equal person.id, json_response["people"][0]["person"]["id"]
+    assert_equal "director", json_response["people"][0]["role"]
   end
 
   test "should update movie" do
