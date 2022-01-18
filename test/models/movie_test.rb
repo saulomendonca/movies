@@ -23,4 +23,9 @@ class MovieTest < ActiveSupport::TestCase
     @movie.release_year = Time.new.year + 11
     assert_not @movie.valid?
   end
+
+  test "Method release_year_in_roman should return the year in roman  numerals" do
+    @movie.release_year = 2002
+    assert_equal @movie.release_year_in_roman, "MMII"
+  end
 end

@@ -7,4 +7,8 @@ class Movie < ApplicationRecord
     greater_than: FIRST_RELEASE_YEAR, 
     less_than: (Time.new.year + 10)
   }
+
+  def release_year_in_roman
+    RomanNumerals.convert(release_year)
+  end
 end
