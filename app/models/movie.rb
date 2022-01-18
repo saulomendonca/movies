@@ -1,6 +1,8 @@
 class Movie < ApplicationRecord
   FIRST_RELEASE_YEAR = 1900
 
+  has_many :roles, dependent: :destroy
+
   validates :title, presence: true
   validates :release_year, numericality: { 
     only_integer: true,  
