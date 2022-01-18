@@ -1,0 +1,1 @@
+json.array! @people, :id, :first_name, :last_name, :aliases

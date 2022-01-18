@@ -4,13 +4,10 @@ class PeopleController < ApplicationController
   # GET /people
   def index
     @people = Person.all
-
-    render json: @people
   end
 
   # GET /people/1
   def show
-    render json: @person
   end
 
   # POST /people
