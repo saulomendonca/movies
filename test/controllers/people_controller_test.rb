@@ -3,6 +3,7 @@ require "test_helper"
 class PeopleControllerTest < ActionDispatch::IntegrationTest
   setup do
     @person = people(:one)
+    @headers = auth_token_for_user()
   end
 
   test "should get index" do
@@ -12,7 +13,9 @@ class PeopleControllerTest < ActionDispatch::IntegrationTest
 
   test "should create person" do
     assert_difference("Person.count") do
-      post people_url, params: { person: { aliases: @person.aliases, first_name: @person.first_name, last_name: @person.last_name } }, as: :json
+      post people_url, params: { person: { 
+        aliases: @person.aliases, first_name: @person.first_name, last_name: @person.last_name } 
+        }, as: :json, headers: @headers
     end
 
     assert_response :created
@@ -31,13 +34,15 @@ class PeopleControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update person" do
-    patch person_url(@person), params: { person: { aliases: @person.aliases, first_name: @person.first_name, last_name: @person.last_name } }, as: :json
+    patch person_url(@person), params: { person: { 
+      aliases: @person.aliases, first_name: @person.first_name, last_name: @person.last_name } 
+      }, as: :json, headers: @headers
     assert_response :success
   end
 
   test "should destroy person" do
     assert_difference("Person.count", -1) do
-      delete person_url(@person), as: :json
+      delete person_url(@person), as: :json, headers: @headers
     end
 
     assert_response :no_content

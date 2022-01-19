@@ -3,6 +3,7 @@ require "test_helper"
 class MoviesControllerTest < ActionDispatch::IntegrationTest
   setup do
     @movie = movies(:one)
+    @headers = auth_token_for_user()
   end
 
   test "should get index" do
@@ -12,7 +13,9 @@ class MoviesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create movie" do
     assert_difference("Movie.count") do
-      post movies_url, params: { movie: { release_year: @movie.release_year, title: @movie.title } }, as: :json
+      post movies_url, params: { 
+        movie: { release_year: @movie.release_year, title: @movie.title } 
+        }, as: :json, headers: @headers
     end
 
     assert_response :created
@@ -30,13 +33,15 @@ class MoviesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update movie" do
-    patch movie_url(@movie), params: { movie: { release_year: @movie.release_year, title: @movie.title } }, as: :json
+    patch movie_url(@movie), params: { 
+      movie: { release_year: @movie.release_year, title: @movie.title } 
+      }, as: :json, headers: @headers
     assert_response :success
   end
 
   test "should destroy movie" do
     assert_difference("Movie.count", -1) do
-      delete movie_url(@movie), as: :json
+      delete movie_url(@movie), as: :json, headers: @headers
     end
 
     assert_response :no_content

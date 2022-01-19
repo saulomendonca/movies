@@ -4,15 +4,16 @@ class RolesControllerTest < ActionDispatch::IntegrationTest
   setup do
     @movie = movies(:one)
     @role = roles(:one)
+    @headers = auth_token_for_user()
   end
 
   test "should get index" do
-    get movie_roles_url(@movie), as: :json
+    get movie_roles_url(@movie), as: :json, headers: @headers
     assert_response :success
   end
 
   test "should show role" do
-    get movie_role_url(@movie, @role), as: :json
+    get movie_role_url(@movie, @role), as: :json, headers: @headers
     assert_response :success
 
     json_response = JSON.parse(response.body)
@@ -25,20 +26,24 @@ class RolesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create role" do
     assert_difference("Role.count") do
-      post movie_roles_url(@movie), params: { role: { movie_id: @role.movie_id, person_id: @role.person_id, role_type: @role.role_type } }, as: :json
+      post movie_roles_url(@movie), params: { 
+        role: { movie_id: @role.movie_id, person_id: @role.person_id, role_type: @role.role_type } 
+        }, as: :json, headers: @headers
     end
 
     assert_response :created
   end
 
   test "should update role" do
-    patch movie_role_url(@movie, @role), params: { role: { movie_id: @role.movie_id, person_id: @role.person_id, role_type: @role.role_type } }, as: :json
+    patch movie_role_url(@movie, @role), params: { 
+      role: { movie_id: @role.movie_id, person_id: @role.person_id, role_type: @role.role_type } 
+      }, as: :json, headers: @headers
     assert_response :success
   end
 
   test "should destroy role" do
     assert_difference("Role.count", -1) do
-      delete movie_role_url(@movie,@role), as: :json
+      delete movie_role_url(@movie,@role), as: :json, headers: @headers
     end
 
     assert_response :no_content
