@@ -1,4 +1,5 @@
 class RolesController < ApplicationController
+  before_action :authorize_request
   before_action :set_role, only: %i[ show update destroy ]
 
   # GET /movies/1/roles
@@ -15,10 +16,12 @@ class RolesController < ApplicationController
   # POST /movies/1/roles
   # POST /movies/1/roles.json
   def create
+    movie = Movie.find(params[:movie_id])
     @role = Role.new(role_params)
+    @role.movie = movie
 
     if @role.save
-      render :show, status: :created, location: movie_role_url(params[:movie_id], @role)
+      render :show, status: :created, location: movie_role_url(movie, @role)
     else
       render json: @role.errors, status: :unprocessable_entity
     end

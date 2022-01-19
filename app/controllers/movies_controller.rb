@@ -1,4 +1,5 @@
 class MoviesController < ApplicationController
+  before_action :authorize_request, except: [:index, :show]
   before_action :set_movie, only: %i[ show update destroy ]
 
   # GET /movies
