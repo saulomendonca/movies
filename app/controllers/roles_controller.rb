@@ -5,7 +5,7 @@ class RolesController < ApplicationController
   # GET /movies/1/roles
   # GET /movies/1/roles.json
   def index
-    @roles = Role.all
+    @roles = Role.where(movie_id: params[:movie_id]).all
   end
 
   # GET /movies/1/roles/1
